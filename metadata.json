@@ -1,0 +1,8 @@
+{
+  "name": "Lumière AI - Virtual Beauty Concierge",
+  "description": "An elegant, AI-powered makeup trial app that analyzes skin tones, searches for authentic brand shades via Google Search grounding, and provides virtual foundation try-ons.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
