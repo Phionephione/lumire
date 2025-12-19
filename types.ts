@@ -1,28 +1,18 @@
 
+export interface FacialLandmarks {
+  jawline: [number, number][]; // Array of 5-7 points defining the jaw and chin
+  forehead: [number, number][]; // 3 points for the hairline/forehead boundary
+  left_eye: [number, number];
+  right_eye: [number, number];
+  mouth: [number, number];
+  nose_tip: [number, number];
+}
+
 export interface SkinAnalysis {
   tone: string;
   undertone: string;
-  lighting: string;
-  suggestedShades: string[];
   description: string;
-  faceBox: {
-    top: number;
-    left: number;
-    width: number;
-    height: number;
-  };
-  landmarks: {
-    forehead_center: [number, number];
-    left_temple: [number, number];
-    right_temple: [number, number];
-    left_jaw: [number, number];
-    right_jaw: [number, number];
-    chin_tip: [number, number];
-    left_eye: [number, number];
-    right_eye: [number, number];
-    nose_bridge: [number, number];
-    mouth_center: [number, number];
-  };
+  landmarks: FacialLandmarks;
 }
 
 export interface FoundationShade {
@@ -31,17 +21,19 @@ export interface FoundationShade {
   hex: string;
   brand: string;
   buyUrl: string;
-  price?: string;
 }
 
-export interface ChatMessage {
-  role: 'user' | 'model';
-  text: string;
-}
-
-export type AppStep = 'welcome' | 'capture' | 'analyze' | 'brand-select' | 'shade-select' | 'try-on';
+export type AppStep = 'welcome' | 'brand-discovery' | 'live-mirror';
 
 export interface GroundingSource {
   title: string;
   uri: string;
+}
+
+/**
+ * Added ChatMessage interface to support the beauty advisor chat functionality
+ */
+export interface ChatMessage {
+  role: 'user' | 'model';
+  text: string;
 }
