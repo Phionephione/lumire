@@ -44,37 +44,53 @@ const CameraModule: React.FC<CameraModuleProps> = ({ onCapture, onCancel }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/90 flex flex-col items-center justify-center p-4">
-      <div className="relative max-w-2xl w-full aspect-video bg-neutral-800 rounded-2xl overflow-hidden shadow-2xl border border-white/10">
+    <div className="fixed inset-0 z-50 bg-neutral-950 flex flex-col items-center justify-center p-4">
+      <div className="relative max-w-2xl w-full aspect-video bg-neutral-900 rounded-3xl overflow-hidden shadow-[0_0_100px_rgba(0,0,0,0.5)] border border-white/5">
         {error ? (
           <div className="absolute inset-0 flex items-center justify-center text-white text-center p-8">
-            <p>{error}</p>
+            <p className="font-light">{error}</p>
           </div>
         ) : (
           <>
-            <video ref={videoRef} autoPlay playsInline muted className="w-full h-full object-cover" />
-            <div className="absolute inset-0 border-4 border-white/20 rounded-full scale-[0.6] pointer-events-none flex items-center justify-center">
-              <div className="w-full h-full border border-white/40 rounded-full animate-pulse"></div>
+            <video ref={videoRef} autoPlay playsInline muted className="w-full h-full object-cover scale-x-[-1]" />
+            
+            {/* FACIAL SHAPE OVERLAY GUIDE */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              {/* This div acts as a mask/vignette with a clear facial cutout */}
+              <div className="w-[40%] aspect-[1/1.35] border-2 border-white/40 rounded-[50%_50%_50%_50%_/_60%_60%_40%_40%] relative">
+                <div className="absolute inset-[-2px] border border-white/10 rounded-[50%_50%_50%_50%_/_60%_60%_40%_40%] animate-pulse"></div>
+                
+                {/* Visual cues for eyes and mouth alignment */}
+                <div className="absolute top-[35%] left-0 right-0 flex justify-around px-4 opacity-20">
+                    <div className="w-4 h-1 bg-white rounded-full"></div>
+                    <div className="w-4 h-1 bg-white rounded-full"></div>
+                </div>
+                <div className="absolute bottom-[20%] left-1/2 -translate-x-1/2 w-8 h-1 bg-white rounded-full opacity-20"></div>
+              </div>
             </div>
-            <p className="absolute bottom-4 left-0 right-0 text-center text-white/70 text-sm font-light">
-              Align your face within the circle
-            </p>
+
+            <div className="absolute bottom-6 left-0 right-0 flex flex-col items-center gap-2">
+                <p className="text-white text-[10px] font-black uppercase tracking-[0.3em] bg-black/40 backdrop-blur-md px-4 py-1.5 rounded-full">
+                  Align face within guide
+                </p>
+            </div>
           </>
         )}
       </div>
       
-      <div className="mt-8 flex gap-6">
+      <div className="mt-10 flex gap-6 items-center">
         <button 
           onClick={onCancel}
-          className="px-8 py-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all duration-300 backdrop-blur-md"
+          className="px-8 py-3 rounded-full text-neutral-400 hover:text-white transition-colors text-sm font-bold uppercase tracking-widest"
         >
           Cancel
         </button>
         <button 
           onClick={handleCapture}
-          className="px-10 py-3 rounded-full bg-white text-black font-semibold hover:bg-neutral-200 transition-all duration-300 shadow-xl"
+          className="group relative px-12 py-4 bg-white text-black font-black text-sm uppercase tracking-[0.2em] rounded-full hover:scale-105 active:scale-95 transition-all shadow-[0_20px_40px_rgba(255,255,255,0.1)]"
         >
           Capture Analysis
+          <div className="absolute inset-0 rounded-full border border-white group-hover:scale-110 opacity-0 group-hover:opacity-100 transition-all"></div>
         </button>
       </div>
       <canvas ref={canvasRef} className="hidden" />
